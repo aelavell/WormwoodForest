@@ -4,6 +4,8 @@ obj/
 *.svd
 
 *.log
+
+Assembly-CSharp*
  
 !Library/*.asset
 !Library/AssetImportState
