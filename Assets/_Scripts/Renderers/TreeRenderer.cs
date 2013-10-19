@@ -5,12 +5,20 @@ using System.Collections.Generic;
 struct RenderState {
 	public float angle;
 	public Vector3 pos;
+	
+	public RenderState(float angle, Vector3 pos) {
+		this.angle = angle;
+		this.pos = pos;
+	}
 }
 
 public class TreeRenderer : InstructionRenderer {
 	public TreeSegment segmentPrefab;
 	public TreeSegment stubPrefab;
 	public int angleOffset;
+	public Vector3 startPos;
+	
+	public List<Instruction> instructions;
 	
 	Stack<RenderState> stateStack;
 	RenderState state;
@@ -19,18 +27,20 @@ public class TreeRenderer : InstructionRenderer {
 	List<TreeSegment> stubs;
 	
 	void Start() {
-		state = new RenderState();
+		state = new RenderState(0, startPos);
 		stateStack = new Stack<RenderState>();
 		stateStack.Push(state);
 		segments = new List<TreeSegment>();
 		stubs = new List<TreeSegment>();
+		
+		StartCoroutine<float>(RenderSequence(instructions));
 	}
 	
 	public IEnumerator RenderSequence(List<Instruction> instructionSequence) {	
 		stateStack.Push(new RenderState());
 		foreach (var instruction in instructionSequence) {
 			yield return StartCoroutine<float>(Execute(instruction)); 
-			
+			yield return new WaitForSeconds(0.2f);	
 		}
 	}
 	
@@ -74,7 +84,7 @@ public class TreeRenderer : InstructionRenderer {
 	
 	void ExecutePush() {
 		stateStack.Push(state);
-		state = new RenderState();
+		state = new RenderState(state.angle, state.pos);
 	}
 	
 	void ExecutePop() {
