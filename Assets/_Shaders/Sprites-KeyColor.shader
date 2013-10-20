@@ -88,7 +88,7 @@ Shader "Sprites/KeyColor"
 				else if (distance( inputColor, _Source1) < 0.1f) {
 					return float4(HueShiftRGB(_Out1, (_SinTime.x + _SinTime.y + _SinTime.z + _SinTime.w)), 1);
 				} 
-				else if (distance( IN.color, _Source2) < 0.1f) {
+				else if (distance( inputColor, _Source2) < 0.1f) {
 					return float4(HueShiftRGB(_Out2, (_SinTime.x + _SinTime.y + _SinTime.z + _SinTime.w)), 1);
 				}
 				else {
