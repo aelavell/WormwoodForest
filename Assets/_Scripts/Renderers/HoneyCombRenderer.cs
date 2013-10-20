@@ -21,9 +21,10 @@ public class HoneyCombRenderer : InstructionRenderer {
 	
 	IEnumerator Program() { 
 		float wait = 0.05f;
-		for (int i = 0; i < 61; i++) {
+		for (int i = 0; i < 20; i+= 3) {
 			hexes[i].SetInstruction(Instruction.forward);
-			//hexes[i].SetInstruction(Instruction.cw);
+			hexes[i+1].SetInstruction(Instruction.forward);
+			hexes[i+2].SetInstruction(Instruction.cw);
 			//yield return new WaitForSeconds(wait);
 		}
 
@@ -32,7 +33,7 @@ public class HoneyCombRenderer : InstructionRenderer {
 	}
 	
 	IEnumerator ExecProgram() { 
-		float wait = 0.7f;
+		float wait = 1.0f;
 		for (int i = 0; i < 61; i++) {
 			hexes[i].ExecuteInstruction();
 			yield return new WaitForSeconds(wait);
