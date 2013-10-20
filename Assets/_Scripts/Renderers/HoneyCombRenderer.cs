@@ -5,9 +5,14 @@ using System.Collections.Generic;
 public class HoneyCombRenderer : InstructionRenderer {
 	public GameObject hexPrefab;
 	List<Vector3> hexCenters;
+	public Constellation constellation;
+	
+	public AudioClip winSound;
 	
 	public List<Hex> hexes;
 	int hexdex = 0;
+	
+	bool failed = false;
 	
 	void Start() {
 		hexCenters = GetHexagonCenters(8.8f, new Vector3(226.6583f, 186,0));
@@ -44,7 +49,7 @@ public class HoneyCombRenderer : InstructionRenderer {
 		PushInstruction(Instruction.forward);
 		PushInstruction(Instruction.cw);
 		PushInstruction(Instruction.forward);
-		//PushInstruction(Instruction.forward);
+		PushInstruction(Instruction.forward);
 		PushInstruction(Instruction.push);
 		PushInstruction(Instruction.cw);
 		PushInstruction(Instruction.cw);
@@ -95,8 +100,17 @@ public class HoneyCombRenderer : InstructionRenderer {
 			if (hexes[i].hasInstruction == false) {
 				break;	
 			}
-			yield return StartCoroutine(hexes[i].ExecuteInstruction());
-			
+			if (hexes[i].instruction != constellation.instructions[i]) {
+				failed = true;
+				yield return StartCoroutine(hexes[i].BadInstruction());
+			}
+			else {
+				yield return StartCoroutine(hexes[i].ExecuteInstruction());
+			}
+		}
+		
+		if (!failed) {
+			//audio.PlayOneShot(winSound);
 		}
 
 		yield break;

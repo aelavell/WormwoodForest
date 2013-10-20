@@ -21,4 +21,12 @@ public class Hex : MonoBehaviour {
 		//highlight.renderer.material.SetColor("_Out1", Color.blue);
 		//highlight.renderer.material.SetColor("_Out2", Color.blue);
 	}
+	
+	public IEnumerator BadInstruction() {
+		highlight.renderer.material.SetColor("_Out0", Color.red);	
+		yield return StartCoroutine(Static.TreeRenderer.Execute(instruction));
+		//yield return StartCoroutine(Static.TreeRenderer.Execute(instruction));
+		//highlight.renderer.material.SetColor("_Out1", Color.blue);
+		//highlight.renderer.material.SetColor("_Out2", Color.blue);
+	}
 }
