@@ -1,4 +1,4 @@
-Shader "Sprites/KeyColor"
+Shader "Sprites/KeyColorHueShift"
 {
 	Properties
 	{
@@ -83,13 +83,13 @@ Shader "Sprites/KeyColor"
 			{
 				fixed4 inputColor = tex2D(_MainTex, IN.texcoord) * IN.color;
 				if (distance( inputColor, _Source0) < 0.1f) {
-					return float4(_Out0.xyz, 1);
+					return float4(HueShiftRGB(_Out0, (_SinTime.x + _SinTime.y + _SinTime.z + _SinTime.w)), 1);
 				} 
 				else if (distance( inputColor, _Source1) < 0.1f) {
-					return float4(_Out1.xyz, 1);
+					return float4(HueShiftRGB(_Out1, (_SinTime.x + _SinTime.y + _SinTime.z + _SinTime.w)), 1);
 				} 
 				else if (distance( inputColor, _Source2) < 0.1f) {
-					return float4(_Out2.xyz, 1);
+					return float4(HueShiftRGB(_Out2, (_SinTime.x + _SinTime.y + _SinTime.z + _SinTime.w)), 1);
 				}
 				else {
 					return inputColor;
