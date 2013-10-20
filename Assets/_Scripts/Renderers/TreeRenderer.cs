@@ -40,7 +40,7 @@ public class TreeRenderer : InstructionRenderer {
 		stateStack.Push(new RenderState());
 		foreach (var instruction in instructionSequence) {
 			yield return StartCoroutine<float>(Execute(instruction)); 
-			yield return new WaitForSeconds(0.2f);	
+			yield return new WaitForSeconds(0.1f);	
 		}
 	}
 	
