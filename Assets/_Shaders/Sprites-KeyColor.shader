@@ -7,10 +7,10 @@ Shader "Sprites/KeyColor"
 		[MaterialToggle] PixelSnap ("Pixel snap", Float) = 0
 		_Source0 ("Source0", Color) = (1,0,0,1)
 		_Source1 ("Source1", Color) = (0,1,0,1)
-		_Source2 ("Source2", Color) = (0,0,1,1)
+		//_Source2 ("Source2", Color) = (0,0,1,1)
 		_Out0 ("Out0", Color) = (1,0,0,1)
 		_Out1 ("Out1", Color) = (0,1,0,1)
-		_Out2 ("Out2", Color) = (0,0,1,1)
+		//_Out2 ("Out2", Color) = (0,0,1,1)
 	}
 
 	SubShader
@@ -34,10 +34,13 @@ Shader "Sprites/KeyColor"
 		Pass
 		{
 		CGPROGRAM
+			#pragma target 3.0
 			#pragma vertex vert
 			#pragma fragment frag
 			#pragma multi_compile DUMMY PIXELSNAP_ON
 			#include "UnityCG.cginc"
+			#include "Color.cginc"
+			
 			
 			struct appdata_t
 			{
@@ -75,20 +78,18 @@ Shader "Sprites/KeyColor"
 			fixed4 _Out0;
 			fixed4 _Out1;
 			fixed4 _Out2;
-			
 
 			fixed4 frag(v2f IN) : COLOR
 			{
-				float4 texColor = IN.color;//tex2D(_MainTex, IN.texcoord);
-	
-				if (distance(texColor, _Source0) < 0.1f) {
-					return _Out0;
+				fixed4 inputColor = IN.color;
+				if (distance( inputColor, _Source0) < 0.1f) {
+					return float4(HueShiftRGB(_Out0, (_SinTime.x + _SinTime.y + _SinTime.z + _SinTime.w)), 1);
 				} 
-				else if (distance(texColor, _Source1) < 0.1f) {
-					return _Out1;
+				else if (distance( inputColor, _Source1) < 0.1f) {
+					return float4(HueShiftRGB(_Out1, (_SinTime.x + _SinTime.y + _SinTime.z + _SinTime.w)), 1);
 				} 
-				else if (distance(texColor, _Source2) < 0.1f) {
-					return _Out2;
+				else if (distance( IN.color, _Source2) < 0.1f) {
+					return float4(HueShiftRGB(_Out2, (_SinTime.x + _SinTime.y + _SinTime.z + _SinTime.w)), 1);
 				}
 				else {
 					return tex2D(_MainTex, IN.texcoord) * IN.color;
