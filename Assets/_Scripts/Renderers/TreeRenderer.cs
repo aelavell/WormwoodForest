@@ -26,7 +26,7 @@ public class TreeRenderer : InstructionRenderer {
 	List<TreeSegment> segments;
 	List<TreeSegment> stubs;
 	
-	void Start() {
+	void Awake() {
 		state = new RenderState(0, startPos);
 		stateStack = new Stack<RenderState>();
 		stateStack.Push(state);
@@ -89,12 +89,12 @@ public class TreeRenderer : InstructionRenderer {
 	}
 	
 	IEnumerator RenderSegment() {
-		Instantiate(segmentPrefab, transform.position + state.pos, Quaternion.AngleAxis(state.angle, Vector3.forward));
-		//segments.Add(Instantiate(segmentPrefab, transform.position + state.pos, Quaternion.AngleAxis(state.angle, Vector3.forward)) as TreeSegment);
+		//Instantiate(segmentPrefab, transform.position + state.pos, Quaternion.AngleAxis(state.angle, Vector3.forward));
+		segments.Add(Instantiate(segmentPrefab, transform.position + state.pos, Quaternion.AngleAxis(state.angle, Vector3.forward)) as TreeSegment);
 		yield return new WaitForSeconds(.833f);
-		Instantiate(segmentPrefabStatic, transform.position + state.pos, Quaternion.AngleAxis(state.angle, Vector3.forward));
+		//Instantiate(segmentPrefabStatic, transform.position + state.pos, Quaternion.AngleAxis(state.angle, Vector3.forward));
 	
-		//segments.Add(Instantiate(segmentPrefabStatic, transform.position + state.pos, Quaternion.AngleAxis(state.angle, Vector3.forward)) as TreeSegment);
+		segments.Add(Instantiate(segmentPrefabStatic, transform.position + state.pos, Quaternion.AngleAxis(state.angle, Vector3.forward)) as TreeSegment);
 		yield break;
 	}
 }
