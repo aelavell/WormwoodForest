@@ -17,6 +17,7 @@ public class ArmControl : MonoBehaviour {
 	public EyeControl eyeControl;
 	public BabyControl babyControl;
 	public MoveBeetleAfterRandomTime beetleControl;
+	public Renderer fingerGoop;
 
 	public void SetHand(HandType type){
 		if(current != null){
@@ -31,15 +32,14 @@ public class ArmControl : MonoBehaviour {
 	}
 
 	public bool inUse;
-
+	
 	public IEnumerator PlayBucket(){
 		while(inUse){
 			yield return null;
 		}
-		inUse = true;
 		bucket.PlayAnimByName("BucketSplash");
 		yield return new WaitForSeconds(bucketAnimLockTime);
-		inUse = false;
+		slab.Clear();
 	}
 
 	public void RockSmashed(){
@@ -110,7 +110,14 @@ public class ArmControl : MonoBehaviour {
 		toSmash = new List<Renderer>();
 		toSmash.Add(eyeSitting);
 		toSmash.Add(eyeStemSitting);
-	}	
+	}
+
+	public void GetGoopColor(){
+		slab.SetGoopColor();
+	}
+	public void ClearGoop(){
+		slab.ClearGoop();
+	}
 }
 
 public enum HandType{

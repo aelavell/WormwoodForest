@@ -9,6 +9,7 @@ public class ArmHotspot : MonoBehaviour {
 	}
 	
 	void OnMouseDown(){
+		if(enabled)
 		Static.ArmControl.GetComponent<SimpleAnimation>().PlayAnimByName(animationName);
 	}
 }

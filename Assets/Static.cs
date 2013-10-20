@@ -35,5 +35,17 @@ public class Static : MonoBehaviour {
 			return instance.treeRenderer;
 		}
 	}
-
+	public HexStandHotSpot hexStandHotspot;
+	public static HexStandHotSpot HexStandHotspot{
+		get{
+			return instance.hexStandHotspot;
+		}
+	}
+	
+	public Slab slab;
+	public static Slab Slab{
+		get{
+			return instance.slab;
+		}
+	}
 }
