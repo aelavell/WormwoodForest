@@ -5,12 +5,12 @@ using System.Collections.Generic;
 public class HoneyCombRenderer : InstructionRenderer {
 	public GameObject hexPrefab;
 	List<Vector3> hexCenters;
+	List<GameObject> hexes;
 	
 	void Start() {
 		hexCenters = GetHexagonCenters(8.8f, new Vector3(226.6583f, 186,0));	
 		foreach (var center in hexCenters) {
-			Instantiate(hexPrefab, center, Quaternion.identity);
-			 
+			hexes.Add(Instantiate(hexPrefab, center, Quaternion.identity) as GameObject);
 		}
 	}
 	
@@ -48,4 +48,7 @@ public class HoneyCombRenderer : InstructionRenderer {
 		return list;
 	}
 	
+	public void ClickHex(int index) {
+		//hexes[index].renderer.material.	
+	}
 }

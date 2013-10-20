@@ -7,10 +7,10 @@ Shader "Sprites/KeyColor"
 		[MaterialToggle] PixelSnap ("Pixel snap", Float) = 0
 		_Source0 ("Source0", Color) = (1,0,0,1)
 		_Source1 ("Source1", Color) = (0,1,0,1)
-		//_Source2 ("Source2", Color) = (0,0,1,1)
+		_Source2 ("Source2", Color) = (0,0,1,1)
 		_Out0 ("Out0", Color) = (1,0,0,1)
 		_Out1 ("Out1", Color) = (0,1,0,1)
-		//_Out2 ("Out2", Color) = (0,0,1,1)
+		_Out2 ("Out2", Color) = (0,0,1,1)
 	}
 
 	SubShader
@@ -81,7 +81,7 @@ Shader "Sprites/KeyColor"
 
 			fixed4 frag(v2f IN) : COLOR
 			{
-				fixed4 inputColor = IN.color;
+				fixed4 inputColor = tex2D(_MainTex, IN.texcoord) * IN.color;
 				if (distance( inputColor, _Source0) < 0.1f) {
 					return float4(HueShiftRGB(_Out0, (_SinTime.x + _SinTime.y + _SinTime.z + _SinTime.w)), 1);
 				} 
