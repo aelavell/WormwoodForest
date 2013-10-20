@@ -7,6 +7,7 @@ public class HoneyCombRenderer : InstructionRenderer {
 	List<Vector3> hexCenters;
 	
 	public List<Hex> hexes;
+	int hexdex = 0;
 	
 	void Start() {
 		hexCenters = GetHexagonCenters(8.8f, new Vector3(226.6583f, 186,0));
@@ -19,14 +20,71 @@ public class HoneyCombRenderer : InstructionRenderer {
 		StartCoroutine(Program());
 	}
 	
+	void PushInstruction(Instruction instruction) {
+		hexes[hexdex].SetInstruction(instruction);
+		hexdex++;
+	}
+	
 	IEnumerator Program() { 
+		/*
 		float wait = 0.05f;
 		for (int i = 0; i < 20; i+= 3) {
 			hexes[i].SetInstruction(Instruction.forward);
 			hexes[i+1].SetInstruction(Instruction.forward);
 			hexes[i+2].SetInstruction(Instruction.cw);
 		}
+		*/
+		
+		PushInstruction(Instruction.push);
+		PushInstruction(Instruction.forward);
+		PushInstruction(Instruction.forward);
+		PushInstruction(Instruction.pop);
+		PushInstruction(Instruction.ccw);
+		PushInstruction(Instruction.forward);
+		PushInstruction(Instruction.forward);
+		PushInstruction(Instruction.cw);
+		PushInstruction(Instruction.forward);
+		//PushInstruction(Instruction.forward);
+		PushInstruction(Instruction.push);
+		PushInstruction(Instruction.cw);
+		PushInstruction(Instruction.cw);
+		PushInstruction(Instruction.forward);
+		PushInstruction(Instruction.pop);
+		
+		PushInstruction(Instruction.forward);
+		PushInstruction(Instruction.cw);
+		PushInstruction(Instruction.forward);
+		PushInstruction(Instruction.forward);
 
+		PushInstruction(Instruction.cw);
+		
+		PushInstruction(Instruction.cw);
+		
+		PushInstruction(Instruction.push);
+		
+		PushInstruction(Instruction.cw);
+		PushInstruction(Instruction.forward);
+		PushInstruction(Instruction.forward);
+		PushInstruction(Instruction.pop);
+		
+		PushInstruction(Instruction.forward);
+		PushInstruction(Instruction.forward);
+		
+		PushInstruction(Instruction.cw);
+		PushInstruction(Instruction.forward);
+		
+		PushInstruction(Instruction.push);
+		PushInstruction(Instruction.cw);
+		PushInstruction(Instruction.cw);
+		PushInstruction(Instruction.forward);
+		PushInstruction(Instruction.pop);
+		
+		PushInstruction(Instruction.forward);
+		PushInstruction(Instruction.cw);
+		
+		PushInstruction(Instruction.forward);
+		PushInstruction(Instruction.forward);
+		
 		StartCoroutine(ExecProgram());
 		yield break;
 	}
@@ -34,7 +92,11 @@ public class HoneyCombRenderer : InstructionRenderer {
 	IEnumerator ExecProgram() { 
 		float wait = 0.833f;
 		for (int i = 0; i < 61; i++) {
+			if (hexes[i].hasInstruction == false) {
+				break;	
+			}
 			yield return StartCoroutine(hexes[i].ExecuteInstruction());
+			
 		}
 
 		yield break;

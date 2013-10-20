@@ -5,8 +5,10 @@ public class Hex : MonoBehaviour {
 	public GameObject full;
 	public GameObject highlight;
 	public Instruction instruction;
+	public bool hasInstruction = false;
 	
 	public void SetInstruction(Instruction instruction) {
+		hasInstruction = true;
 		this.instruction = instruction;
 		full.renderer.material.SetColor("_Out0", Static.InstructionSettings.FindByInstruction(instruction).color);
 		full.renderer.material.SetColor("_Out1", Static.InstructionSettings.FindByInstruction(instruction).color);
