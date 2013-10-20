@@ -49,7 +49,7 @@ public class HoneyCombRenderer : InstructionRenderer {
 		PushInstruction(Instruction.forward);
 		PushInstruction(Instruction.cw);
 		PushInstruction(Instruction.forward);
-		PushInstruction(Instruction.forward);
+		
 		PushInstruction(Instruction.push);
 		PushInstruction(Instruction.cw);
 		PushInstruction(Instruction.cw);
