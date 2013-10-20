@@ -14,9 +14,11 @@ struct RenderState {
 
 public class TreeRenderer : InstructionRenderer {
 	public TreeSegment segmentPrefab;
+	public TreeSegment segmentPrefabStatic;
 	public TreeSegment stubPrefab;
 	public int angleOffset;
 	public Vector3 startPos;
+	public float length;
 	
 	public List<Instruction> instructions;
 	
@@ -33,7 +35,7 @@ public class TreeRenderer : InstructionRenderer {
 		segments = new List<TreeSegment>();
 		stubs = new List<TreeSegment>();
 		
-		StartCoroutine<float>(RenderSequence(instructions));
+		//StartCoroutine<float>(RenderSequence(instructions));
 	}
 	
 	public IEnumerator RenderSequence(List<Instruction> instructionSequence) {	
@@ -44,7 +46,7 @@ public class TreeRenderer : InstructionRenderer {
 		}
 	}
 	
-	IEnumerator Execute(Instruction instruction) {
+	public IEnumerator Execute(Instruction instruction) {
 		if (instruction == Instruction.ccw) {
 			yield return StartCoroutine<float>(ExecuteCCW());
 		}
@@ -76,7 +78,7 @@ public class TreeRenderer : InstructionRenderer {
 	}
 	
 	IEnumerator ExecuteForward() {
-		var offset = Quaternion.AngleAxis(state.angle, Vector3.forward) * Vector3.up * segmentPrefab.length;
+		var offset = Quaternion.AngleAxis(state.angle, Vector3.forward) * Vector3.up * length;
 		state.pos += offset;
 		yield return StartCoroutine<float>(RenderSegment());
 		yield break;
@@ -92,12 +94,15 @@ public class TreeRenderer : InstructionRenderer {
 	}
 	
 	IEnumerator RenderStub() {
-		stubs.Add(Instantiate(stubPrefab, state.pos, Quaternion.AngleAxis(state.angle, Vector3.forward)) as TreeSegment);
+		stubs.Add(Instantiate(stubPrefab, transform.position + state.pos, Quaternion.AngleAxis(state.angle, Vector3.forward)) as TreeSegment);
+	
 		yield break;	
 	}
 	
 	IEnumerator RenderSegment() {
-		segments.Add(Instantiate(segmentPrefab, state.pos, Quaternion.AngleAxis(state.angle, Vector3.forward)) as TreeSegment);
+		segments.Add(Instantiate(segmentPrefab, transform.position + state.pos, Quaternion.AngleAxis(state.angle, Vector3.forward)) as TreeSegment);
+		yield return new WaitForSeconds(.25f);
+		segments.Add(Instantiate(segmentPrefabStatic, transform.position + state.pos, Quaternion.AngleAxis(state.angle, Vector3.forward)) as TreeSegment);
 		yield break;
 	}
 }

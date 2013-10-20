@@ -28,5 +28,12 @@ public class Static : MonoBehaviour {
 			return instance.instructionSettings;
 		}
 	}
+	
+	public TreeRenderer treeRenderer;
+	public static TreeRenderer TreeRenderer{
+		get{
+			return instance.treeRenderer;
+		}
+	}
 
 }
