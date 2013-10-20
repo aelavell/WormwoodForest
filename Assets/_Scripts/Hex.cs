@@ -13,9 +13,9 @@ public class Hex : MonoBehaviour {
 		full.renderer.material.SetColor("_Out2", Static.InstructionSettings.FindByInstruction(instruction).color);
 	}
 	
-	public void ExecuteInstruction() {
+	public IEnumerator ExecuteInstruction() {
 		highlight.renderer.material.SetColor("_Out0", Color.blue);	
-		StartCoroutine(Static.TreeRenderer.Execute(instruction));
+		yield return StartCoroutine(Static.TreeRenderer.Execute(instruction));
 		//highlight.renderer.material.SetColor("_Out1", Color.blue);
 		//highlight.renderer.material.SetColor("_Out2", Color.blue);
 	}

@@ -25,7 +25,6 @@ public class HoneyCombRenderer : InstructionRenderer {
 			hexes[i].SetInstruction(Instruction.forward);
 			hexes[i+1].SetInstruction(Instruction.forward);
 			hexes[i+2].SetInstruction(Instruction.cw);
-			//yield return new WaitForSeconds(wait);
 		}
 
 		StartCoroutine(ExecProgram());
@@ -33,10 +32,9 @@ public class HoneyCombRenderer : InstructionRenderer {
 	}
 	
 	IEnumerator ExecProgram() { 
-		float wait = 1.0f;
+		float wait = 0.833f;
 		for (int i = 0; i < 61; i++) {
-			hexes[i].ExecuteInstruction();
-			yield return new WaitForSeconds(wait);
+			yield return StartCoroutine(hexes[i].ExecuteInstruction());
 		}
 
 		yield break;
