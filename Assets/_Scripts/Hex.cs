@@ -3,14 +3,14 @@ using System.Collections;
 
 public class Hex : MonoBehaviour {
 	public GameObject full;
+	public Instruction instruction;
 	
-	void Start() {
-		ToColors(Color.red, Color.green, Color.blue);	
+	public void SetInstruction(Instruction instruction) {
+		this.instruction = instruction;
+		full.renderer.material.SetColor("_Out0", Static.InstructionSettings.FindByInstruction(instruction).color);
+		full.renderer.material.SetColor("_Out1", Static.InstructionSettings.FindByInstruction(instruction).color);
+		full.renderer.material.SetColor("_Out2", Static.InstructionSettings.FindByInstruction(instruction).color);
 	}
 	
-	public void ToColors(Color color0, Color color1, Color color2) {
-		full.renderer.material.SetColor("_Out0", color0);
-		full.renderer.material.SetColor("_Out1", color1);
-		full.renderer.material.SetColor("_Out2", color2);
-	}
+	
 }
