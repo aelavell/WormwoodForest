@@ -11,14 +11,14 @@ public class InstructionSettings : MonoBehaviour{
 	}
 	
 	public InstructionGroup FindByMaterials(List<RawMaterials> materials){
-		return colorGroups.First(x => {
+		return colorGroups.Where(x => {
 			foreach(var mat in materials){
-				if(!x.rawMaterials.Contains (mat)){
+				if(!x.rawMaterials.Contains(mat)){
 					return false;
 				}
 			}
 			return materials.Count == x.rawMaterials.Count;
-		});
+		}).FirstOrDefault();
 	}
 }
 
